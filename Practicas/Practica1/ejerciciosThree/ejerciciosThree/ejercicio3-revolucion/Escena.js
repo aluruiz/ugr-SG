@@ -24,7 +24,7 @@ class Escena extends THREE.Scene {
     this.createCamera ();
 
     // Un suelo
-    //this.createGround ();
+    this.createGround ();
 
     // Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
     this.axis = new THREE.AxesHelper (5);
@@ -60,7 +60,7 @@ class Escena extends THREE.Scene {
     // Debe orbitar con respecto al punto de mira de la cámara
     this.cameraControl.target = look;
   }
-  /*
+
   createGround () {
     // El suelo es un Mesh, necesita una geometría y un material.
 
@@ -80,7 +80,7 @@ class Escena extends THREE.Scene {
 
     // Que no se nos olvide añadirlo a la escena, que en este caso es  this
     this.add (ground);
-  }*/
+  }
 
   createGUI () {
     // Se crea la interfaz gráfica de usuario
