@@ -1,110 +1,100 @@
+
 class Pendulo extends THREE.Object3D {
     constructor(gui) {
         super();
+        
+        this.createGUI(gui,"Controles de los péndulos");
+        
+        // Creacion del Pendulo 1
+        let materialVerde = new THREE.MeshPhongMaterial({color:0x34A853});
+        let materialRojo = new THREE.MeshPhongMaterial({color:0xEA4335});
+        
+        this.heightVerde = 2;
+        this.widthVerde = 2;
+        let geometriaVerde = new THREE.BoxGeometry(this.widthVerde, this.heightVerde);
 
-        this.createGUI(gui, "Control del péndulo");
-/*
-        // Pendulo 1
-        let geometryPendulo1 = new THREE.BoxGeometry(2, 2);
-        let materialPendulo1 = new THREE.MeshPhongMaterial();
-        this.meshPendulo1 = new THREE.Mesh(geometryPendulo1, materialPendulo1);
+        this.heightRojo = 5;
+        this.widthRojo = 2;
+        let geometriaRoja = new THREE.BoxGeometry(this.widthRojo, this.heightRojo);
 
-        // Pendulo 2
-        let geometryPendulo2 = new THREE.BoxGeometry(5, 2);
-        let materialPendulo2 = new THREE.MeshPhongMaterial();
-        this.meshPendulo2 = new THREE.Mesh(geometryPendulo2, materialPendulo2);
 
-        this.add(this.meshPendulo1);
+        this.meshSuperior = new THREE.Mesh(geometriaVerde, materialVerde);
+        this.meshMedio = new THREE.Mesh(geometriaRoja, materialRojo);
+        this.meshInferior = new THREE.Mesh(geometriaVerde, materialVerde);
+
+        this.meshMedio.position.y = (-this.heightRojo / 2) + (-this.heightVerde / 2);
+        this.meshInferior.position.y = 2 * (-this.heightVerde / 2) + (-this.heightRojo * this.guiControls.escalaPendulo1);
+
+
+        //Pendulo 2
+        this.h_pendulo2 = 3;
+        this.w_pendulo2 = 1;
+
+        let geometriaPendulo2 = new THREE.BoxGeometry(this.w_pendulo2, this.h_pendulo2, (this.w_pendulo2 / 2));
+        geometriaPendulo2.translate(0, (-this.h_pendulo2 / 3), 0);
+        let materialAzul = new THREE.MeshPhongMaterial({color:0x4285F4});
+
+        this.meshPendulo2 = new THREE.Mesh(geometriaPendulo2, materialAzul);
+        this.meshPendulo2.position.z = 0.75;
+
+        // Añadir los objetos
+        this.add(this.meshSuperior);
+        this.add(this.meshMedio);
+        this.add(this.meshInferior);
         this.add(this.meshPendulo2);
-
- */
-        let materialVerde = new THREE.MeshPhongMaterial({color:0x009933});
-        let materialRojo = new THREE.MeshPhongMaterial({color:0xff3300});
-
-        // Pendulo 1
-        this.h_verde = 2;
-        this.w_verde = 2;
-        this.h_rojo = 5;
-        this.w_rojo = 2;
-
-        let geometriaPendulo1Superior = new THREE.BoxGeometry(this.w_verde, this.h_verde);
-        this.meshPendulo1Superior = new THREE.Mesh(geometriaPendulo1Superior, materialVerde);
-
-        let geometriaPendulo1Medio = new THREE.BoxGeometry(this.w_rojo, this.h_verde);
-        this.meshPendulo1Medio = new THREE.Mesh(geometriaPendulo1Medio, materialRojo);
-        this.meshPendulo1Medio.position.y = -this.h_rojo/2 -this.h_verde/2;
-
-        let geometriaPendulo1Inferior = new THREE.BoxGeometry(2, 2);
-        this.meshPendulo1Inferior = new THREE.Mesh(geometriaPendulo1Inferior, materialVerde);
-        this.meshPendulo1Inferior.position.y = 2*(-this.h_verde/2) - this.h_rojo*this.guiControls.longitud1;
-/*
-        //Geometria 1
-        this.h_green = 2;
-        this.w_green = 2;
-        var geometryGreen = new THREE.BoxGeometry(this.w_green, this.h_green);
-
-        //Geometria 2
-        this.h_red = 5;
-        this.w_red = 2;
-        var geometryRed = new THREE.BoxGeometry(this.w_red, this.h_red);
-
-        //Caja de arriba
-        this.boxUp = new THREE.Mesh(geometryGreen,green_Material);
-
-        //Caja de en medio
-        this.boxMid = new THREE.Mesh(geometryRed, red_Material);
-        this.boxMid.position.y = -this.h_red/2 -this.h_green/2;
-
-        //Caja de abajo
-        this.boxDown = new THREE.Mesh(geometryGreen, green_Material);
-        this.boxDown.position.y = 2*(-this.h_green/2) - this.h_red*this.guiControls.escala;
-
-        //Pendulo inferior
-        this.h = 3;
-        this.w = 1;
-
-        var geometry = new THREE.BoxGeometry(this.w,this.h, this.w/2);
-        geometry.translate(0,-this.h/3,0);
-        var material = new THREE.MeshPhongMaterial({color:0x6f6c6b});
-
-        this.boxInf = new THREE.Mesh(geometry,material);
-        this.boxInf.position.z = 0.7;
-*/
-/*
-        this.add(this.boxInf);
-
-        this.add(this.boxUp);
-        this.add(this.boxMid);
-        this.add(this.boxDown);*/
-        this.add(this.meshPendulo1Superior);
-        this.add(this.meshPendulo1Medio);
-        this.add(this.meshPendulo1Inferior);
     }
 
     createGUI (gui) {
-        this.guiControls = {
-            longitud1: 1.0,
-            giro1: 0.0,
+        // Controles para el tamaño, la orientación y la posición de la caja
+        this.guiControls = new function () {
+            this.escalaPendulo1 = 1.0;
+            this.rotacionPendulo1 = 0.0;
 
-            longitud2: 1.0,
-            posicion2: 0.0,
-            giro2: 0
+            this.escalaPendulo2 = 1.0;
+            this.rotacionPendulo2 = 0.0;
+            this.posicionPendulo2 = 0;
+
+            this.resetPendulo1 = function () {
+                this.escalaPendulo1 = 1.0;
+                this.rotacionPendulo1 = 0.0;
+            }
+
+            this.resetPendulo2 = function () {
+                this.escalaPendulo2 = 1.0;
+                this.rotacionPendulo2 = 0.0;
+                this.posicionPendulo2 = 0;
+            }
         }
 
-        let folderPendulo1 = gui.addFolder ("Pendulo 1");
-        folderPendulo1.add (this.guiControls, 'longitud1', 1.0, 2.0, 0.1).name ('Longitud ').listen();
-        folderPendulo1.add (this.guiControls, 'giro1', 0, 1, 0.01).name ('Giro ').listen();
 
-        let folderPendulo2 = gui.addFolder ("Pendulo 2");
-        folderPendulo2.add (this.guiControls, 'longitud2', 1.0, 2.0, 0.1).name ('Longitud ').listen();
-        folderPendulo2.add (this.guiControls, 'posicion2', -0.7, 0.7, 0.01).name ('Posicion (%) ').listen();
-        folderPendulo2.add (this.guiControls, 'giro2', 0, 1, 0.01).name ('Giro ').listen();
+        let folderPendulo1 = gui.addFolder ("Control del péndulo 1");
+        folderPendulo1.add (this.guiControls, 'escalaPendulo1', 1.0, 2.0, 0.1).name ('Escala').listen();
+        folderPendulo1.add (this.guiControls, 'rotacionPendulo1', -0.9, 0.9, 0.01).name ('Rotación').listen();
+        folderPendulo1.add (this.guiControls, 'resetPendulo1').name ('[Reset Pendulo 1]');
+
+        let folderPendulo2 = gui.addFolder ("Control del péndulo 2");
+        folderPendulo2.add (this.guiControls, 'escalaPendulo2', 1.0, 2.0, 0.1).name ('Escala').listen();
+        folderPendulo2.add (this.guiControls, 'rotacionPendulo2', -0.9, 0.9, 0.01).name ('Rotación').listen();
+        folderPendulo2.add (this.guiControls, 'posicionPendulo2', 0, 1, 0.01).name ('Posición').listen();
+        folderPendulo2.add (this.guiControls, 'resetPendulo2').name ('[Reset Pendulo 2]');
     }
 
-    update() {
-        this.meshPendulo1Inferior.position.y = 2*(-this.h_verde/2) - this.h_rojo * this.guiControls.longitud1;
-        this.meshPendulo1Medio.scale.y = this.guiControls.longitud1;
-        this.meshPendulo1Inferior.position.y = -(this.h_rojo*this.guiControls.longitud1 / 2) - this.h_verde / 2;
-        
+    update () {
+        // Con independencia de cómo se escriban las siguientes líneas, el orden en el que se aplican las transformaciones es:
+        // Primero, el escalado
+        // Segundo, la rotación en Z
+        // Después, la rotación en Y
+        // Luego, la rotación en X
+        // Y por último la traslación
+        this.meshInferior.position.y = 2 * (-this.heightVerde / 2) - this.heightRojo * this.guiControls.escalaPendulo1;
+        this.meshMedio.scale.y = this.guiControls.escalaPendulo1;
+        this.meshMedio.position.y = -(this.heightRojo * this.guiControls.escalaPendulo1 / 2) - this.heightVerde / 2;
+        this.rotation.z = this.guiControls.rotacionPendulo1;
+
+
+        this.meshPendulo2.rotation.z = this.guiControls.rotacionPendulo2;
+        this.meshPendulo2.scale.y = this.guiControls.escalaPendulo2;
+        // La posicion del pendulo 2 es en funcion de la del pendulo 1
+        this.meshPendulo2.position.y = (-(this.guiControls.posicionPendulo2 / 2) - 2) - (this.guiControls.posicionPendulo2 * (4 * this.guiControls.escalaPendulo1));
     }
 }
