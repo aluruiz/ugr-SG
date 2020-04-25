@@ -8,7 +8,7 @@ class Figuras extends THREE.Object3D {
     // Se crea la parte de la interfaz que corresponde a la caja
     // Se crea primero porque otros métodos usan las variables que se definen para la interfaz
     
-    var shape = new THREE.Shape ( ) ;
+    /*var shape = new THREE.Shape ( ) ;
     // Se crea el contorno exterior
     shape.moveTo(10,10);
     shape.lineTo( 10, 40 );
@@ -23,55 +23,92 @@ class Figuras extends THREE.Object3D {
     // El otro ojo con otra elipse de manera similar , ahora la boca
     hole = new THREE.Shape ( ) ;
     hole.absarc ( 20 , 16 , 2 , Math.PI*2, Math.PI ) ;
-    shape.holes.push ( hole ) ;
+    shape.holes.push ( hole ) ;*/
     
-    var pts = [new THREE.Vector3(0,1,2), new THREE.Vector3(2,3,4), new THREE.Vector3(-3,-4,-5)];
+    /*var pts = [new THREE.Vector3(0,1,2), new THREE.Vector3(2,3,4), new THREE.Vector3(-3,-4,-5)];
     var path = new THREE. CatmullRomCurve3 ( pts ) ;
     var options = { steps : 50 , curveSegments : 4 , extrudePath : path } ;
     //var options = { amount: 8 , steps: 2 , curveSegments : 4, bevelThickness : 4 , bevelSize : 2 , bevelSegments : 2 };      
     var geometry = new THREE.ExtrudeGeometry (shape, options);
     var aux = new THREE.Object3D();
     aux = new THREE.Mesh (geometry, this.material);
-    this.add (aux);
+    this.add (aux);*/
+    
+    //Crear figuras
+    var heartS = this.createHeartShape();
+    var spadeS = this.createInvertHeartShape();
+    var cloverS = this.createCloverShape();
+    var diamondS = this.createDiamondShape();
 
+    //Elementos 3D
+    this.heart = new THREE.Object3D();
+    this.spades = new THREE.Object3D();
+    this.clover = new THREE.Object3D();
+    this.spades = new new THREE.Object3D();
+    
+    //Crear figuras simples
+    var options = { amount: 8 , steps: 2 , curveSegments : 4, bevelThickness : 4 , bevelSize : 2 , bevelSegments : 2 };
+    heart = new THREE.Mesh(heartS, );
+
+    
   }
 
-  createCaja(){
-    var ejes = new THREE.AxesHelper();
-    var aux = new THREE.Object3D();
-    aux.caja = new THREE.Mesh (new THREE.BoxGeometry (1,1,1), this.material);
-    aux.position.set(3.0,3.0,-3.0);   
-    aux.add(ejes);
-    aux.add(aux.caja);
+  createHeartShape(){
+    var heartShape = new THREE.Shape();
 
-    return aux;
+    heartShape.moveTo( 0, 75 );
+    heartShape.bezierCurveTo( 0, 75, -10, 100,-25,100);
+    heartShape.bezierCurveTo( -55, 100, -55, 65, -55, 65 );
+    heartShape.bezierCurveTo( -55, 45, -35, 33, -5, 5 );
+    heartShape.bezierCurveTo( 35, 33, 55, 45, 55, 65 );
+    heartShape.bezierCurveTo( 55, 65, 55, 100, 25, 100 );
+    heartShape.bezierCurveTo( 10, 100, 0, 75, 0, 75 );
+
+    return heartShape;
   }
 
-  createGUICaja (gui) {
-    var that = this;
+  createInvertHeartShape(){
+    var heartShape = new THREE.Shape();
 
-    this.caja.guiControls = {
-      sizeX: 1,
-      sizeY: 1,
-      sizeZ: 1
-    };
+    heartShape.moveTo( 0, 25 );
+    heartShape.bezierCurveTo( 0, 25, -10, 0, -25,0);
+    heartShape.bezierCurveTo( -55, 0, -55, 35, -55, 35 );
+    heartShape.bezierCurveTo( -55, 55, -35, 77, -5, 95 );
+    heartShape.bezierCurveTo( 35, 77, 55, 55, 55, 35 );
+    heartShape.bezierCurveTo( 55, 35, 55, 0, 25, 0 );
+    heartShape.bezierCurveTo( 10, 0, 0, 25, 0, 25 );
 
-    // Se crea una sección para los controles de la caja
-    var folder = gui.addFolder ("Dimensiones de la Caja");
-    // Estas lineas son las que añaden los componentes de la interfaz
-    // Las tres cifras indican un valor mínimo, un máximo y el incremento
-    // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
-    folder.add (this.caja.guiControls, 'sizeX', 0.1, 5.0, 0.1).name('Tamaño X : ').onChange( function(){ 
-      that.caja.caja.scale.set(that.caja.guiControls.sizeX,that.caja.guiControls.sizeY,that.caja.guiControls.sizeZ);
-    });
+    return heartShape;
+  }
 
-    folder.add (this.caja.guiControls, 'sizeY', 0.1, 5.0, 0.1).name('Tamaño Y : ').onChange( function(){ 
-      that.caja.caja.scale.set(that.caja.guiControls.sizeX,that.caja.guiControls.sizeY,that.caja.guiControls.sizeZ);
-    });
+  createCloverShape(){
+    var cloverShape = new THREE.Shape();
 
-    folder.add (this.caja.guiControls, 'sizeZ', 0.1, 5.0, 0.1).name('Tamaño Z : ').onChange( function(){ 
-      that.caja.caja.scale.set(that.caja.guiControls.sizeX,that.caja.guiControls.sizeY,that.caja.guiControls.sizeZ);
-    });
+    cloverShape.moveTo( 0, 25 );
+    cloverShape.bezierCurveTo( 0, 25, -10, 0,-25,0);
+    cloverShape.bezierCurveTo( -55, 0, -55, 30, -55, 20 );
+
+    cloverShape.bezierCurveTo( -55, 50, -25, 50, -15, 50 );
+    cloverShape.bezierCurveTo( -15, 50, -25, 30, -25, 50 );
+    cloverShape.bezierCurveTo( -35,70, -35, 90, 0, 95 );
+    cloverShape.bezierCurveTo( 35,90, 35, 70, 25, 50 );
+
+    cloverShape.bezierCurveTo( 25, 50, 55, 50, 55, 20);
+    cloverShape.bezierCurveTo( 55, 20, 55, 0, 25, 0 );
+    cloverShape.bezierCurveTo( 10, 0, 0, 25, 0, 25 );
+
+    return cloverShape;
+  }
+
+  createDiamondShape(){
+    var diamondShape = new THREE.Shape();
+
+    diamondShape.lineTo(-50,50);
+    diamondShape.lineTo(0,100);
+    diamondShape.lineTo(50,50);
+    diamondShape.lineTo(0,0);
+
+    return diamondShape;
   }
 
   update () {
