@@ -5,7 +5,7 @@ class Figuras extends THREE.Object3D {
 
     this.material=new THREE.MeshNormalMaterial({flatShading: true});
     
-    //Crear figuras Centrales
+    //Crear figuras
     var heartS = this.createHeartShape();
     var spadeS = this.createInvertHeartShape();
     var cloverS = this.createCloverShape();
@@ -40,7 +40,7 @@ class Figuras extends THREE.Object3D {
     heart = new THREE.Mesh(heartGeometry, this.material);
     spades = new THREE.Mesh(spadesGeometry, this.material);
     clover = new THREE.Mesh(cloverGeometry, this.material);
-    diamond = new THREE.Mesh(diamondGeometry, this.material);
+    diamond = this.heart = new THREE.Mesh(diamondGeometry, this.material);
     
     // Posicionamiento Objetos
     heart.position.set(-80,80,0);
@@ -53,8 +53,6 @@ class Figuras extends THREE.Object3D {
     this.add(diamond);
     this.add(clover);
     this.add(spades);
-
-    //Crear figuras Laterales
 
   }
 
@@ -126,11 +124,12 @@ class Figuras extends THREE.Object3D {
     ];
     var base = new THREE.Mesh (
       new THREE.LatheGeometry(points), material
-    );t
+    );
 
     base.position.set(0,0,10);
 
     return base;
+
   }
 
   update () {
