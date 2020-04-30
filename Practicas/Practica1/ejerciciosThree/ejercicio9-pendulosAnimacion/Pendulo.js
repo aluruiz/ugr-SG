@@ -43,6 +43,7 @@ class Pendulo extends THREE.Object3D {
         this.add(this.meshInferior);
         this.add(this.meshPendulo2);
 
+        this.tiempoAnterior = Date.now();
         // Propiedades para cambiar la direccion de la velocidad
         this.reboteAnimacion1 = false;
         this.reboteAnimacion2 = false;
@@ -60,8 +61,8 @@ class Pendulo extends THREE.Object3D {
 
             this.animacionPendulo1 = false;
             this.animacionPendulo2 = false;
-            this.velocidadPendulo1 = 0.04;
-            this.velocidadPendulo2 = 0.04;
+            this.velocidadPendulo1 = 1;
+            this.velocidadPendulo2 = 1;
 
             this.resetPendulo1 = function () {
                 this.escalaPendulo1 = 1.0;
@@ -89,28 +90,24 @@ class Pendulo extends THREE.Object3D {
 
         let folderPendulo3 = gui.addFolder("Animaciones");
         folderPendulo3.add (this.guiControls, 'animacionPendulo1').name('Pendulo 1');
-        folderPendulo3.add(this.guiControls,'velocidadPendulo1', 0, 0.2, 0.01).name('Vel Pend 1').listen();
+        folderPendulo3.add(this.guiControls,'velocidadPendulo1', 0, 5, 0.1).name('Vel Pend 1').listen();
         folderPendulo3.add (this.guiControls, 'animacionPendulo2').name('Pendulo 2');
-        folderPendulo3.add(this.guiControls,'velocidadPendulo2', 0, 0.2, 0.01).name('Vel Pend 2').listen();
+        folderPendulo3.add(this.guiControls,'velocidadPendulo2', 0, 5, 0.1).name('Vel Pend 2').listen();
     }
 
     update () {
-        // Con independencia de cómo se escriban las siguientes líneas, el orden en el que se aplican las transformaciones es:
-        // Primero, el escalado
-        // Segundo, la rotación en Z
-        // Después, la rotación en Y
-        // Luego, la rotación en X
-        // Y por último la traslación
+        let tiempoActual = Date.now();
+        let tiempoTranscurrido = (tiempoActual - this.tiempoAnterior) / 1000;
         if (this.guiControls.animacionPendulo1) {
             // Si la rotacion llega al limite, activar el rebote
             if (this.rotation.z > 1) {
                 this.reboteAnimacion1 = true;
-            } else if (this.rotation.z < -1) {
+            } else if (this.rotation.z <= -1) {
                 this.reboteAnimacion1 = false;
             }
 
             // Si el rebote está activado, la velocidad es negativa
-            let velocidad = this.guiControls.velocidadPendulo1;
+            let velocidad = this.guiControls.velocidadPendulo1 * tiempoTranscurrido;
             if (this.reboteAnimacion1) {
                 velocidad = -(velocidad);
             }
@@ -133,7 +130,7 @@ class Pendulo extends THREE.Object3D {
             }
 
             // Si el rebote está activado, la velocidad es negativa
-            let velocidad = this.guiControls.velocidadPendulo2;
+            let velocidad = this.guiControls.velocidadPendulo2 * tiempoTranscurrido;
             if (this.reboteAnimacion2) {
                 velocidad = -(velocidad);
             }
@@ -145,5 +142,7 @@ class Pendulo extends THREE.Object3D {
         this.meshPendulo2.scale.y = this.guiControls.escalaPendulo2;
         // La posicion del pendulo 2 es en funcion de la del pendulo 1
         this.meshPendulo2.position.y = (-(this.guiControls.posicionPendulo2 / 2) - 2) - (this.guiControls.posicionPendulo2 * (4 * this.guiControls.escalaPendulo1));
+
+        this.tiempoAnterior = tiempoActual;
     }
 }
