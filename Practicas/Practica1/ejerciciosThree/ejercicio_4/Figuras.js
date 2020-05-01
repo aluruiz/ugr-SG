@@ -8,7 +8,7 @@ class Figuras extends THREE.Object3D {
 
     //Crear figuras Centrales
     var heartS = this.createHeartShape();
-    var spadeS = this.createInvertHeartShape();
+    var spadeS = this.createSpadesShape();
     var cloverS = this.createCloverShape();
     var diamondS = this.createDiamondShape();
 
@@ -26,39 +26,29 @@ class Figuras extends THREE.Object3D {
       bevelThickness: 1,
       bevelSize: 1,
       bevelOffset: 0,
-      bevelSegments: 1,
-      extrudePath: null
+      bevelSegments: 1
     };
 
-    this.central.heart.heartGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (heartS, opcionesBisel), this.material);
-    this.central.diamond.diamondGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (diamondS, opcionesBisel), this.material);
+    this.central.heart.heartGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (heartS, opcionesBisel), new THREE.MeshPhongMaterial( { color: 0xff0000 } ));
+    this.central.diamond.diamondGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (diamondS, opcionesBisel), new THREE.MeshPhongMaterial( { color: 0xff0000 } ));
 
     this.central.spades.spadesGeometry = new THREE.Object3D();
-    this.central.spades.spadesGeometry.body = new THREE.Mesh(new THREE.ExtrudeGeometry (spadeS, opcionesBisel), this.material);
-    this.central.spades.spadesGeometry.base = this.createBase(this.material);
+    this.central.spades.spadesGeometry.body = new THREE.Mesh(new THREE.ExtrudeGeometry (spadeS, opcionesBisel), new THREE.MeshPhongMaterial( { color: 0x0000ff } ));
+    this.central.spades.spadesGeometry.base = this.createBase(new THREE.MeshPhongMaterial( { color: 0x0000ff } ));
     this.central.spades.spadesGeometry.add(this.central.spades.spadesGeometry.body);
     this.central.spades.spadesGeometry.add(this.central.spades.spadesGeometry.base);
 
     this.central.clover.cloverGeometry = new THREE.Object3D();
-    this.central.clover.cloverGeometry.body = new THREE.Mesh(new THREE.ExtrudeGeometry (cloverS, opcionesBisel), this.material);
-    this.central.clover.cloverGeometry.base = this.createBase(this.material);
+    this.central.clover.cloverGeometry.body = new THREE.Mesh(new THREE.ExtrudeGeometry (cloverS, opcionesBisel), new THREE.MeshPhongMaterial( { color: 0x0000ff } ));
+    this.central.clover.cloverGeometry.base = this.createBase(new THREE.MeshPhongMaterial( { color: 0x0000ff } ));
     this.central.clover.cloverGeometry.add(this.central.clover.cloverGeometry.body);
     this.central.clover.cloverGeometry.add(this.central.clover.cloverGeometry.base);
-
-    /*var options = { 
-      amount: 8 , 
-      steps: 2 , 
-      curveSegments : 4, 
-      bevelThickness : 4 , 
-      bevelSize : 2 , 
-      bevelSegments : 2 
-    };*/
     
     // Posicionamiento Objetos
     this.central.heart.position.set(-80,80,0);
-    this.central.diamond.position.set(80,80,0);
-    this.central.clover.position.set(-80,-80,0);
-    this.central.spades.position.set(80,-80,0);
+    this.central.clover.position.set(80,80,0);
+    this.central.spades.position.set(-80,-80,0);
+    this.central.diamond.position.set(80,-80,0);
 
     //Figuras Completas
     this.central.heart.add(this.central.heart.heartGeometry);
@@ -67,7 +57,6 @@ class Figuras extends THREE.Object3D {
     this.central.diamond.add(this.central.diamond.diamondGeometry);
 
     
-
     //Ahora las figuras laterales
     var heartRightS = this.createHeartShape();
     var cloverLeftS = this.createCloverShape();
@@ -75,13 +64,13 @@ class Figuras extends THREE.Object3D {
     //Creamos path
     var path = new THREE.CatmullRomCurve3([
       new THREE.Vector3(50,0,0),
-      new THREE.Vector3(35.35,25,35.35),
-      new THREE.Vector3(0,50,50),
-      new THREE.Vector3(-35.35,75,35.35),
-      new THREE.Vector3(-50,100,0),
-      new THREE.Vector3(-35.35,125,-35.35),
-      new THREE.Vector3(0,150,-50),
-      new THREE.Vector3(35.35,175,-35.35),
+      new THREE.Vector3(25,25,15),
+      new THREE.Vector3(0,50,0),
+      new THREE.Vector3(-25,75,0),
+      new THREE.Vector3(-50,100,15),
+      new THREE.Vector3(-25,125,0),
+      new THREE.Vector3(0,150,0),
+      new THREE.Vector3(25,175,15),
       new THREE.Vector3(50,200,0)
     ]);
 
@@ -95,10 +84,10 @@ class Figuras extends THREE.Object3D {
     this.heartRight = new THREE.Object3D();
     this.cloverLeft = new THREE.Object3D();
       
-    this.heartRight.heartGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (heartRightS, opcionesSinBisel), this.material);
+    this.heartRight.heartGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (heartRightS, opcionesSinBisel),new THREE.MeshPhongMaterial( { color: 0x00ff00 } ));
     this.heartRight.position.set(300,0,0);
     this.heartRight.add(this.heartRight.heartGeometry);
-    this.cloverLeft.cloverGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (cloverLeftS, opcionesSinBisel), this.material);
+    this.cloverLeft.cloverGeometry = new THREE.Mesh(new THREE.ExtrudeGeometry (cloverLeftS, opcionesSinBisel), new THREE.MeshPhongMaterial( { color: 0x00ff00 } ));
     this.cloverLeft.position.set(-300,0,0);
     this.cloverLeft.add(this.cloverLeft.cloverGeometry);
 
@@ -130,18 +119,18 @@ class Figuras extends THREE.Object3D {
     return heartShape;
   }
 
-  createInvertHeartShape(){
-    var heartShape = new THREE.Shape();
+  createSpadesShape(){
+    var spadeShape = new THREE.Shape();
 
-    heartShape.moveTo( 0, 25 );
-    heartShape.bezierCurveTo( 0, 25, -10, 0, -25,0);
-    heartShape.bezierCurveTo( -55, 0, -55, 35, -55, 35 );
-    heartShape.bezierCurveTo( -55, 55, -35, 77, -5, 95 );
-    heartShape.bezierCurveTo( 35, 77, 55, 55, 55, 35 );
-    heartShape.bezierCurveTo( 55, 35, 55, 0, 25, 0 );
-    heartShape.bezierCurveTo( 10, 0, 0, 25, 0, 25 );
+    spadeShape.moveTo( 0, 25 );
+    spadeShape.bezierCurveTo( 0, 25, -10, 0, -25,0);
+    spadeShape.bezierCurveTo( -55, 0, -55, 35, -55, 35 );
+    spadeShape.bezierCurveTo( -55, 55, -35, 77, -5, 95 );
+    spadeShape.bezierCurveTo( 35, 77, 55, 55, 55, 35 );
+    spadeShape.bezierCurveTo( 55, 35, 55, 0, 25, 0 );
+    spadeShape.bezierCurveTo( 10, 0, 0, 25, 0, 25 );
 
-    return heartShape;
+    return spadeShape;
   }
 
   createCloverShape(){

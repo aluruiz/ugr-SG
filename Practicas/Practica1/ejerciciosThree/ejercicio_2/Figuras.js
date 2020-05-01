@@ -157,17 +157,17 @@ class Figuras extends THREE.Object3D {
     // Estas lineas son las que añaden los componentes de la interfaz
     // Las tres cifras indican un valor mínimo, un máximo y el incremento
     // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
-    folder.add(this.cono.guiControls, 'sizeConoRadio', 0.1, 5.0, 0.1).name('Radio').onChange( function(){
+    folder.add(this.cono.guiControls, 'sizeConoRadio', 0.1, 10.0, 0.1).name('Radio').onChange( function(){
       that.cono.cono.geometry = new THREE.ConeGeometry(that.cono.guiControls.sizeConoRadio,that.cono.guiControls.sizeConoAltura,that.cono.guiControls.sizeConoCaras) ;
     });
 
-    folder.add(this.cono.guiControls, 'sizeConoAltura', 0.1, 5.0, 0.1)
+    folder.add(this.cono.guiControls, 'sizeConoAltura', 0.1, 10.0, 0.1)
       .name('Altura')
       .onChange( function(){
         that.cono.cono.geometry = new THREE.ConeGeometry(that.cono.guiControls.sizeConoRadio,that.cono.guiControls.sizeConoAltura,that.cono.guiControls.sizeConoCaras) ;
       });
 
-    folder.add(this.cono.guiControls, 'sizeConoCaras',3, +15,1)
+    folder.add(this.cono.guiControls, 'sizeConoCaras',3, 15,1)
       .name('Nro de Caras')
       .onChange( function(){
         that.cono.cono.geometry = new THREE.ConeGeometry(that.cono.guiControls.sizeConoRadio,that.cono.guiControls.sizeConoAltura,that.cono.guiControls.sizeConoCaras) ;
@@ -191,19 +191,19 @@ class Figuras extends THREE.Object3D {
     // Estas lineas son las que añaden los componentes de la interfaz
     // Las tres cifras indican un valor mínimo, un máximo y el incremento
     // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
-    folder.add(this.cilindro.guiControls, 'sizeCilindroRadioTop',0.5, +10,0.01).name('Radio de Arriba').onChange( function(){
+    folder.add(this.cilindro.guiControls, 'sizeCilindroRadioTop',0.5, 10,0.01).name('Radio de Arriba').onChange( function(){
       that.cilindro.cilindro.geometry = new THREE.CylinderGeometry(that.cilindro.guiControls.sizeCilindroRadioTop, that.cilindro.guiControls.sizeCilindroRadioBot,that.cilindro.guiControls.sizeCilindroAltura,that.cilindro.guiControls.sizeCilindroCaras) ;
     });
 
-    folder.add(this.cilindro.guiControls, 'sizeCilindroRadioBot', 0.5, +10,0.01).name('Radio de Abajo').onChange( function(){
+    folder.add(this.cilindro.guiControls, 'sizeCilindroRadioBot', 0.5, 10,0.01).name('Radio de Abajo').onChange( function(){
       that.cilindro.cilindro.geometry = new THREE.CylinderGeometry(that.cilindro.guiControls.sizeCilindroRadioTop, that.cilindro.guiControls.sizeCilindroRadioBot,that.cilindro.guiControls.sizeCilindroAltura,that.cilindro.guiControls.sizeCilindroCaras) ;
     });
 
-    folder.add(this.cilindro.guiControls, 'sizeCilindroAltura',0.5, +10,0.01).name('Altura').onChange( function(){
+    folder.add(this.cilindro.guiControls, 'sizeCilindroAltura',0.5, 10,0.01).name('Altura').onChange( function(){
       that.cilindro.cilindro.geometry = new THREE.CylinderGeometry(that.cilindro.guiControls.sizeCilindroRadioTop, that.cilindro.guiControls.sizeCilindroRadioBot, that.cilindro.guiControls.sizeCilindroAltura,that.cilindro.guiControls.sizeCilindroCaras) ;
     });
 
-    folder.add(this.cilindro.guiControls, 'sizeCilindroCaras',3, +15,1).name('Nro de Caras').onChange( function(){
+    folder.add(this.cilindro.guiControls, 'sizeCilindroCaras',3, 15,1).name('Nro de Caras').onChange( function(){
       that.cilindro.cilindro.geometry = new THREE.CylinderGeometry(that.cilindro.guiControls.sizeCilindroRadioTop, that.cilindro.guiControls.sizeCilindroRadioBot, that.cilindro.guiControls.sizeCilindroAltura,that.cilindro.guiControls.sizeCilindroCaras) ;
     });
 
@@ -228,11 +228,11 @@ class Figuras extends THREE.Object3D {
       that.esfera.esfera.geometry = new THREE.SphereGeometry(that.esfera.guiControls.sizeEsferaRadio,that.esfera.guiControls.sizeEsferaEcuador,that.esfera.guiControls.sizeEsferaMeridiano) ;
     });
 
-    folder.add(this.esfera.guiControls, 'sizeEsferaEcuador',1, +10,0.01).name('Ecuador').onChange( function(){
+    folder.add(this.esfera.guiControls, 'sizeEsferaEcuador',3, 15,1).name('Ecuador').onChange( function(){
       that.esfera.esfera.geometry = new THREE.SphereGeometry(that.esfera.guiControls.sizeEsferaRadio,that.esfera.guiControls.sizeEsferaEcuador,that.esfera.guiControls.sizeEsferaMeridiano) ;
     });
 
-    folder.add(this.esfera.guiControls, 'sizeEsferaMeridiano',1, +10,0.01).name('Meridiano').onChange( function(){
+    folder.add(this.esfera.guiControls, 'sizeEsferaMeridiano',2, 15,1).name('Meridiano').onChange( function(){
       that.esfera.esfera.geometry = new THREE.SphereGeometry(that.esfera.guiControls.sizeEsferaRadio,that.esfera.guiControls.sizeEsferaEcuador,that.esfera.guiControls.sizeEsferaMeridiano) ;
     });
 
@@ -254,19 +254,19 @@ class Figuras extends THREE.Object3D {
     // Estas lineas son las que añaden los componentes de la interfaz
     // Las tres cifras indican un valor mínimo, un máximo y el incremento
     // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
-    folder.add(this.torus.guiControls, 'sizeTorusRadio',1, +10,0.01).name('Radio').onChange( function(){
+    folder.add(this.torus.guiControls, 'sizeTorusRadio',1, 10,0.01).name('Radio').onChange( function(){
       that.torus.torus.geometry = new THREE.TorusGeometry(that.torus.guiControls.sizeTorusRadio, that.torus.guiControls.sizeTorusTubo, that.torus.guiControls.sizeTorusRadial, that.torus.guiControls.sizeTorusTubular) ;
     });
 
-    folder.add(this.torus.guiControls, 'sizeTorusTubo',1, +10,0.01).name('Tubo').onChange( function(){
+    folder.add(this.torus.guiControls, 'sizeTorusTubo',1, 10,0.01).name('Tubo').onChange( function(){
       that.torus.torus.geometry = new THREE.TorusGeometry(that.torus.guiControls.sizeTorusRadio, that.torus.guiControls.sizeTorusTubo, that.torus.guiControls.sizeTorusRadial, that.torus.guiControls.sizeTorusTubular) ;
     });
 
-    folder.add(this.torus.guiControls, 'sizeTorusRadial',1, +10,0.01).name('Secciones Radiales').onChange( function(){
+    folder.add(this.torus.guiControls, 'sizeTorusRadial',2, 15,1).name('Secciones Radiales').onChange( function(){
       that.torus.torus.geometry = new THREE.TorusGeometry(that.torus.guiControls.sizeTorusRadio, that.torus.guiControls.sizeTorusTubo, that.torus.guiControls.sizeTorusRadial, that.torus.guiControls.sizeTorusTubular) ;
     });
 
-    folder.add(this.torus.guiControls, 'sizeTorusTubular',1, +10,0.01).name('Secciones Tubulares').onChange( function(){
+    folder.add(this.torus.guiControls, 'sizeTorusTubular',2, 15,1).name('Secciones Tubulares').onChange( function(){
       that.torus.torus.geometry = new THREE.TorusGeometry(that.torus.guiControls.sizeTorusRadio, that.torus.guiControls.sizeTorusTubo, that.torus.guiControls.sizeTorusRadial, that.torus.guiControls.sizeTorusTubular) ;
     });
 
@@ -285,11 +285,11 @@ class Figuras extends THREE.Object3D {
     // Estas lineas son las que añaden los componentes de la interfaz
     // Las tres cifras indican un valor mínimo, un máximo y el incremento
     // El método   listen()   permite que si se cambia el valor de la variable en código, el deslizador de la interfaz se actualice
-    folder.add(this.icosa.guiControls, 'sizeIcosaRadio',1, +10,0.01).name('Radio').onChange( function(){
+    folder.add(this.icosa.guiControls, 'sizeIcosaRadio',1, 10,0.01).name('Radio').onChange( function(){
       that.icosa.icosaedro.geometry = new THREE.IcosahedronGeometry(that.icosa.guiControls.sizeIcosaRadio, that.icosa.guiControls.sizeIcosaDetalle) ;
     });
 
-    folder.add(this.icosa.guiControls, 'sizeIcosaDetalle',0, +10,1).name('Detalle').onChange( function(){
+    folder.add(this.icosa.guiControls, 'sizeIcosaDetalle',0, 6,1).name('Detalle').onChange( function(){
       that.icosa.icosaedro.geometry = new THREE.IcosahedronGeometry(that.icosa.guiControls.sizeIcosaRadio, that.icosa.guiControls.sizeIcosaDetalle) ;
     });
   }
@@ -315,15 +315,5 @@ class Figuras extends THREE.Object3D {
     this.icosa.icosaedro.rotation.x+=0.01;
     this.esfera.esfera.rotation.x+=0.01;
     this.torus.torus.rotation.x+=0.01;
-
-    // Con independencia de cómo se escriban las 3 siguientes líneas, el orden en el que se aplican las transformaciones es:
-    // Primero, el escalado
-    // Segundo, la rotación en Z
-    // Después, la rotación en Y
-    // Luego, la rotación en X
-    // Y por último la traslación
-    /*this.position.set (this.guiControls.posX,this.guiControls.posY,this.guiControls.posZ);
-    this.rotation.set (this.guiControls.rotX,this.guiControls.rotY,this.guiControls.rotZ);
-    this.scale.set (this.guiControls.sizeX,this.guiControls.sizeY,this.guiControls.sizeZ);*/
   }
 }
