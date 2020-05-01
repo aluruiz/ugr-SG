@@ -8,7 +8,7 @@ class Figuras extends THREE.Object3D {
     this.taza = this.createTaza();
     this.escuadra = this.createEscuadra();
     this.tuerca = this.createTuerca();
-    
+    this.AnimacionGUI(gui);
     this.add(this.taza);
     this.add(this.escuadra);
     this.add(this.tuerca);
@@ -51,7 +51,6 @@ class Figuras extends THREE.Object3D {
     curva.translate(-4,-4,0);
     hueco.translate(-6,-6,0);
 
-    
     var cuboExternoBSP = new ThreeBSP(cuboExterno);
     var cuboInternoBSP = new ThreeBSP(cuboInterno);
     var huecoBSP = new cuboInternoBSP.subtract(new ThreeBSP(hueco));
@@ -93,15 +92,33 @@ class Figuras extends THREE.Object3D {
     return tuerca;
   }
 
+  AnimacionGUI(gui){
+    var that = this;
+    
+    this.guiControls = {
+      animation:false
+    };
+
+    var folder=gui.addFolder("Animación");
+
+    folder.add(this.guiControls,'animation')
+        .name('Animación : ');
+  }
+
+
   update () {
-    // Con independencia de cómo se escriban las 3 siguientes líneas, el orden en el que se aplican las transformaciones es:
-    // Primero, el escalado
-    // Segundo, la rotación en Z
-    // Después, la rotación en Y
-    // Luego, la rotación en X
-    // Y por último la traslación
-    /*this.position.set (this.guiControls.posX,this.guiControls.posY,this.guiControls.posZ);
-    this.rotation.set (this.guiControls.rotX,this.guiControls.rotY,this.guiControls.rotZ);
-    this.scale.set (this.guiControls.sizeX,this.guiControls.sizeY,this.guiControls.sizeZ);*/
+    if (this.guiControls.animation) {
+      this.escuadra.rotation.z+=0.01;
+      this.escuadra.rotation.y+=0.01;
+      this.escuadra.rotation.x+=0.01;
+
+      this.taza.rotation.z+=0.01;
+      this.taza.rotation.y+=0.01;
+      this.taza.rotation.x+=0.01;
+
+      this.tuerca.rotation.z+=0.01;
+      this.tuerca.rotation.y+=0.01;
+      this.tuerca.rotation.x+=0.01;
+    }
   }
 }
